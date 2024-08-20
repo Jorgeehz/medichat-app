@@ -1,20 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import WelcomeScreen from './WelcomesScreen';
+import ChatScreen from './ChatScreen';
 
 export default function App() {
+  const [userName, setUserName] = useState('');
+  const [isWelcomeScreenVisible, setIsWelcomeScreenVisible] = useState(true);
+
+  const handleNameSubmit = (name) => {
+    setUserName(name);
+    setIsWelcomeScreenVisible(false);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    isWelcomeScreenVisible ? (
+      <WelcomeScreen onNameSubmit={handleNameSubmit} />
+    ) : (
+      <ChatScreen userName={userName} />
+    )
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
