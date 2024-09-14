@@ -10,13 +10,13 @@ const UserOptions = ({ userName, onOptionSelect }) => {
         <Text style={styles.optionTitle}>No te sientes bien?</Text>
         <Text style={styles.optionText}>Dime algo que me levante el ánimo y me haga sentir bien.</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.optionButton} onPress={() => onOptionSelect('Quiero que me des consejos de salud para mi día a día')}>
+      <TouchableOpacity style={styles.optionButton} onPress={() => onOptionSelect('Quiero que me des consejos para el cuidado de mi salud mental para mi día a día')}>
         <Text style={styles.optionTitle}>¿Quieres consejos de salud?</Text>
-        <Text style={styles.optionText}>Quiero que me des consejos de salud para mi día a día.</Text>
+        <Text style={styles.optionText}>Quiero que me des consejos para el cuidado de mi salud mental para mi día a día.</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.optionButton} onPress={() => onOptionSelect('Bríndame información sobre las enfermedades actuales')}>
+      <TouchableOpacity style={styles.optionButton} onPress={() => onOptionSelect('Bríndame información sobre las enfermedades de salud mental actuales')}>
         <Text style={styles.optionTitle}>¿Información sobre enfermedades?</Text>
-        <Text style={styles.optionText}>Bríndame información sobre las enfermedades actuales.</Text>
+        <Text style={styles.optionText}>Bríndame información sobre las enfermedades de salud mental actuales.</Text>
       </TouchableOpacity>
     </View>
   );

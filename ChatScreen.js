@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { TextInput, StyleSheet, Text, View, TouchableOpacity, ImageBackground, StatusBar } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { TypingAnimation } from 'react-native-typing-animation'; // Importar el componente de animación
 import UserOptions from './UserOptions';
+
 
 export default function ChatScreen({ userName }) {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const [showOptions, setShowOptions] = useState(true);
+  const [loading, setLoading] = useState(false); // Estado para controlar la animación
 
   const handleButtonClick = () => {
     if (inputMessage.trim() === "") {
@@ -31,6 +34,20 @@ export default function ChatScreen({ userName }) {
     };
 
     setMessages(previousMessages => GiftedChat.append(previousMessages, [userMessage]));
+    setLoading(true); // Iniciar la animación
+
+    // Añadir el mensaje de "escribiendo..."
+    const typingMessage = {
+      _id: 'typing',
+      text: 'Escribiendo...',
+      createdAt: new Date(),
+      user: {
+        _id: 2,
+        name: 'Medichat',
+        avatar: require('./assets/medichat.png'),
+      }
+    };
+    setMessages(previousMessages => GiftedChat.append(previousMessages, [typingMessage]));
 
     const formattedMessages = [...messages, userMessage].map(msg => ({
       role: msg.user._id === 1 ? "user" : "assistant",
@@ -40,7 +57,7 @@ export default function ChatScreen({ userName }) {
     const allMessages = [
       {
         role: "system",
-        content: `Tu nombre es Medichat y un mensaje de bienvenida amigable corto, eres un asistente Médico que realizas diagnósticos para la atención primaria de la salud, intenta dar respuestas con recomendaciones y siempre avisa al usuario si requiere que asista al médico lo antes posible en caso de ser necesario. El nombre del usuario es ${userName}.`
+        content: `Tu nombre es PsicoChat. Eres un asistente Médico virtual experto en temas de salud mental. Tu objetivo es ayudar a los usuarios con sus problemas y diagnosticarle alguna posible enfermedad mental. Responde de manera clara, tono amigable y acogedor. Si un usuario hace una pregunta que no esté relacionada con Salud Mental, responde diciendo que solo estas apto para temas de Salud Mental. Si no tienes claro lo que el usuario está diciendo, pide más información para responder con más precisión. Este es el nombre del usuario ${userName}.`
       },
       ...formattedMessages,
       {
@@ -53,7 +70,7 @@ export default function ChatScreen({ userName }) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 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'
+        'Authorization':'',
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
@@ -62,8 +79,11 @@ export default function ChatScreen({ userName }) {
     })
     .then(response => response.json())
     .then(data => {
+      setLoading(false); 
       if (data.choices && data.choices[0] && data.choices[0].message) {
         const botResponse = data.choices[0].message.content.trim();
+        setMessages(previousMessages => previousMessages.filter(msg => msg._id !== 'typing'));
+
         const botMessage = {
           _id: Math.random().toString(36).substring(7),
           text: botResponse,
@@ -81,6 +101,8 @@ export default function ChatScreen({ userName }) {
       }
     })
     .catch(error => {
+      setLoading(false);
+      setMessages(previousMessages => previousMessages.filter(msg => msg._id !== 'typing'));
       console.error('Error:', error);
     });
   };
@@ -103,7 +125,7 @@ export default function ChatScreen({ userName }) {
         </View>
 
         <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
-          <Text style={styles.infoText}>Medichat podría cometer errores, por favor validar información importante</Text>
+          <Text style={styles.infoText}>PsicoChat podría cometer errores, por favor validar información importante</Text>
         </View>
         <View style={{ flexDirection: 'row' }}>
           <View style={{
@@ -114,7 +136,7 @@ export default function ChatScreen({ userName }) {
           </View>
 
           <TouchableOpacity onPress={handleButtonClick}>
-            <View style={{ borderRadius: 9999, backgroundColor: 'black', padding: 5, marginRight: 10, marginBottom: 20, width: 50, justifyContent: 'center', height: 40 }}>
+            <View style={{ borderRadius: 9999, backgroundColor: '#F08080', padding: 5, marginRight: 10, marginBottom: 20, width: 50, justifyContent: 'center', height: 40 }}>
               <MaterialIcons name="send" size={24} color="white" style={{ marginLeft: 10 }} />
             </View>
           </TouchableOpacity>
