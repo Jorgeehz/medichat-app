@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { TextInput, StyleSheet, Text, View, TouchableOpacity, ImageBackground, Image } from 'react-native';
 
-export default function WelcomeScreen({ onNameSubmit }) {
+export default function WelcomeScreen({ onNameSubmit, navigation }) {
   const [userName, setUserName] = useState('');
 
   return (
@@ -18,7 +18,7 @@ export default function WelcomeScreen({ onNameSubmit }) {
           value={userName}
           onChangeText={setUserName}
         />
-        <TouchableOpacity style={styles.button} onPress={() => onNameSubmit(userName)}>
+        <TouchableOpacity style={styles.button} onPress={() => {onNameSubmit(userName); navigation.navigate('Chat');}}>
           <Text style={styles.buttonText}>Enviar</Text>
         </TouchableOpacity>
       </ImageBackground>
