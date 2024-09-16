@@ -34,9 +34,8 @@ export default function ChatScreen({ userName }) {
     };
 
     setMessages(previousMessages => GiftedChat.append(previousMessages, [userMessage]));
-    setLoading(true); // Iniciar la animación
+    setLoading(true);
 
-    // Añadir el mensaje de "escribiendo..."
     const typingMessage = {
       _id: 'typing',
       text: 'Escribiendo...',
@@ -44,7 +43,7 @@ export default function ChatScreen({ userName }) {
       user: {
         _id: 2,
         name: 'Medichat',
-        avatar: require('./assets/medichat.png'),
+        avatar: require('./assets/LogoPsico.jpg'),
       }
     };
     setMessages(previousMessages => GiftedChat.append(previousMessages, [typingMessage]));
@@ -90,8 +89,8 @@ export default function ChatScreen({ userName }) {
           createdAt: new Date(),
           user: {
             _id: 2,
-            name: 'Medichat',
-            avatar: require('./assets/medichat.png'),
+            name: 'PsicoChat',
+            avatar: require('./assets/LogoPsico.jpg'),
           }
         };
 
@@ -117,7 +116,6 @@ export default function ChatScreen({ userName }) {
   };
 
   return (
-    <ImageBackground source={require('./assets/bg3-1.png')} resizeMode='cover' style={{ flex: 1, width: "100%", height: "100%" }}>
       <View style={{ flex: 1 }}>
         {showOptions && <UserOptions userName={userName} onOptionSelect={handleOptionSelect} />}
         <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -136,7 +134,7 @@ export default function ChatScreen({ userName }) {
           </View>
 
           <TouchableOpacity onPress={handleButtonClick}>
-            <View style={{ borderRadius: 9999, backgroundColor: '#F08080', padding: 5, marginRight: 10, marginBottom: 20, width: 50, justifyContent: 'center', height: 40 }}>
+            <View style={{ borderRadius: 9999, backgroundColor: '#78b9bd', padding: 5, marginRight: 10, marginBottom: 20, width: 50, justifyContent: 'center', height: 40 }}>
               <MaterialIcons name="send" size={24} color="white" style={{ marginLeft: 10 }} />
             </View>
           </TouchableOpacity>
@@ -144,7 +142,6 @@ export default function ChatScreen({ userName }) {
 
         <StatusBar style="auto" />
       </View>
-    </ImageBackground>
   );
 }
 

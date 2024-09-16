@@ -5,13 +5,13 @@ import { View, Text, StyleSheet, Button, ScrollView, Image, Touchable } from 're
 const Home = ({ navigation }) => {
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Image source={require('./assets/medichat.png')} style={styles.logoContainer} />
+            <Image source={require('./assets/LogoPsico.jpg')} style={styles.logoContainer} />
             <Text style={styles.title}>Bienvenido a PsicoChat</Text>
             <Text style={styles.description}>
                 PsicoChat es una aplicación diseñada para ayudarte a cuidar tu bienestar emocional. A través de nuestro chatbot, recibirás apoyo en cualquier momento que lo necesites.
             </Text>
             <TouchableOpacity style={styles.startButton} onPress={() => navigation.navigate('Welcome')}>
-                <Text style={{ color: 'white', textAlign: 'center' }}>Comenzar</Text>
+                <Text style={styles.textstyle}>Comenzar</Text>
             </TouchableOpacity>
 
             <Text style={styles.benefitsTitle}>Beneficios:</Text>
@@ -86,9 +86,15 @@ const styles = StyleSheet.create({
     },
     startButton: {
         marginVertical: 20,
-        backgroundColor: 'red',
+        backgroundColor: '#b4e3d8',
         borderRadius: 10,
         padding: 10,
+    },
+    textstyle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: 'white',
+        textAlign: 'center',
     },
     benefitsTitle: {
         fontSize: 24,

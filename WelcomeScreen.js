@@ -7,9 +7,8 @@ export default function WelcomeScreen({ onNameSubmit, navigation }) {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('./assets/bg3-1.png')} resizeMode="cover" style={styles.background}>
         <View style={styles.logoContainer}>
-          <Image source={require('./assets/medichat.png')} style={styles.logo} />
+          <Image source={require('./assets/LogoPsico.jpg')} style={styles.logo} />
         </View>
         <Text style={styles.welcomeText}>Hola bienvenido, ¿Cómo te llamas?</Text>
         <TextInput
@@ -21,7 +20,6 @@ export default function WelcomeScreen({ onNameSubmit, navigation }) {
         <TouchableOpacity style={styles.button} onPress={() => {onNameSubmit(userName); navigation.navigate('Chat');}}>
           <Text style={styles.buttonText}>Enviar</Text>
         </TouchableOpacity>
-      </ImageBackground>
     </View>
   );
 }
@@ -45,6 +43,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
+    borderRadius: 50,
   },
   welcomeText: {
     fontSize: 24,
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: 'red',
+    backgroundColor: '#78b9bd',
     padding: 10,
     borderRadius: 10,
   },

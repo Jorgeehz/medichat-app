@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 const UserOptions = ({ userName, onOptionSelect }) => {
   return (
     <View style={styles.container}>
-      <Image source={require('./assets/medichat.png')} style={styles.logo} />
+      <Image source={require('./assets/LogoPsico.jpg')} style={styles.logo} />
       <Text style={styles.welcomeText}>Hola {userName}, ¿cómo puedo ayudarte?</Text>
       <TouchableOpacity style={styles.optionButton} onPress={() => onOptionSelect('Dime algo que me levante el ánimo y me haga sentir bien')}>
         <Text style={styles.optionTitle}>No te sientes bien?</Text>
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: 'center',
     marginBottom: 10,
+    borderRadius: 50,
   },
   welcomeText: {
     fontSize: 18,
