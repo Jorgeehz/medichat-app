@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { TextInput, StyleSheet, Text, View, TouchableOpacity, ImageBackground, StatusBar } from 'react-native';
+import { TextInput, StyleSheet, Text, View, TouchableOpacity, ImageBackground, StatusBar, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { GiftedChat } from 'react-native-gifted-chat';
-import { TypingAnimation } from 'react-native-typing-animation'; // Importar el componente de animación
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import UserOptions from './UserOptions';
-
 
 export default function ChatScreen({ userName }) {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const [showOptions, setShowOptions] = useState(true);
-  const [loading, setLoading] = useState(false); // Estado para controlar la animación
+  const [loading, setLoading] = useState(false);
 
   const handleButtonClick = () => {
     if (inputMessage.trim() === "") {
@@ -36,49 +34,75 @@ export default function ChatScreen({ userName }) {
     setMessages(previousMessages => GiftedChat.append(previousMessages, [userMessage]));
     setLoading(true);
 
+
     const typingMessage = {
       _id: 'typing',
       text: 'Escribiendo...',
       createdAt: new Date(),
       user: {
         _id: 2,
-        name: 'Medichat',
+        name: '',
         avatar: require('./assets/LogoPsico.jpg'),
       }
     };
     setMessages(previousMessages => GiftedChat.append(previousMessages, [typingMessage]));
 
-    const formattedMessages = [...messages, userMessage].map(msg => ({
-      role: msg.user._id === 1 ? "user" : "assistant",
-      content: msg.text,
-    }));
-
-    const allMessages = [
-      {
-        role: "system",
-        content: `Tu nombre es PsicoChat. Eres un asistente Médico virtual experto en temas de salud mental. Tu objetivo es ayudar a los usuarios con sus problemas y diagnosticarle alguna posible enfermedad mental. Responde de manera clara, tono amigable y acogedor.Palabras claves que abarcan salud mental pueden ser: animo, sentimientos, bajoneado, etc. Si un usuario hace una pregunta que no esté relacionada con Salud Mental, responde diciendo que solo estas apto para temas de Salud Mental. Si no tienes claro lo que el usuario está diciendo, pide más información para responder con más precisión. Este es el nombre del usuario ${userName}.`
-      },
-      ...formattedMessages,
-      {
-        role: "user",
-        content: messageText
-      }
-    ];
-
-    fetch('https://api.openai.com/v1/chat/completions', {
+    
+    fetch('https://02b0-181-78-0-62.ngrok-free.app/predict', {  
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':'Bearer ',
       },
       body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: allMessages
+        text: messageText
       })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const userPrediction = data.prediccion; 
+      console.log('Predicción:', userPrediction);
+      const formattedMessages = [...messages, userMessage].map(msg => ({
+        role: msg.user._id === 1 ? "user" : "assistant",
+        content: msg.text,
+      }));
+
+      const allMessages = [
+        {
+          role: "system",
+          content: `Siempre dices tu nombre, Psicochat. Eres un asistente médico virtual experto en salud mental
+          .Siempre inicia la conversacion de una forma cordial con el usuario.
+          Intenta hablar de manera amigable con el usuario.
+          El nombre del usuario es ${userName}. 
+          Utiliza esta prediccion para responder de manera mas precisa ${userPrediction}.`
+        },
+        ...formattedMessages,
+        {
+          role: "user",
+          content: `${messageText}`
+        }
+      ];
+
+   
+      return fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ',
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: allMessages
+        })
+      });
     })
     .then(response => response.json())
     .then(data => {
-      setLoading(false); 
+      setLoading(false);
       if (data.choices && data.choices[0] && data.choices[0].message) {
         const botResponse = data.choices[0].message.content.trim();
         setMessages(previousMessages => previousMessages.filter(msg => msg._id !== 'typing'));
@@ -115,33 +139,76 @@ export default function ChatScreen({ userName }) {
     setShowOptions(false); 
   };
 
-  return (
-      <View style={{ flex: 1 }}>
-        {showOptions && <UserOptions userName={userName} onOptionSelect={handleOptionSelect} />}
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <GiftedChat messages={messages} renderInputToolbar={() => { }} user={{ _id: 1 }} minInputToolbarHeight={0} />
-        </View>
-
-        <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
-          <Text style={styles.infoText}>PsicoChat podría cometer errores, por favor validar información importante</Text>
-        </View>
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{
-            flex: 1, marginLeft: 10, marginBottom: 5, backgroundColor: 'white', borderRadius: 15, borderColor: 'grey',
-            borderWidth: 1, height: 40, marginRight: 10, paddingLeft: 10, justifyContent: 'center'
-          }}>
-            <TextInput placeholder='Describe tus síntomas' onChangeText={handleTextInput} value={inputMessage} />
-          </View>
-
-          <TouchableOpacity onPress={handleButtonClick}>
-            <View style={{ borderRadius: 9999, backgroundColor: '#78b9bd', padding: 5, marginRight: 10, marginBottom: 20, width: 50, justifyContent: 'center', height: 40 }}>
-              <MaterialIcons name="send" size={24} color="white" style={{ marginLeft: 10 }} />
+  const renderCustomBubble = (props) => {
+    return (
+      <Bubble
+        {...props}
+        wrapperStyle={{
+          left: styles.leftBubble,
+          right: styles.rightBubble,
+        }}
+        textStyle={{
+          left: styles.leftText,
+          right: styles.rightText,
+        }}
+        timeTextStyle={{
+          left: styles.leftTime,
+          right: styles.rightTime,
+        }}
+        renderMessage={(messageProps) => {
+          return (
+            <View style={styles.messageContainer}>
+              {messageProps.currentMessage.user._id === 2 && (
+                <View style={styles.botContainer}>
+                  <Image
+                    source={require('./assets/LogoPsico.jpg')} 
+                    style={styles.botAvatar}
+                  />
+                  <Text style={styles.botText}>
+                    {messageProps.currentMessage.text}
+                  </Text>
+                </View>
+              )}
             </View>
-          </TouchableOpacity>
+          );
+        }}
+      />
+    );
+  };
+
+  return (
+    <View style={{ flex: 1 }}>
+      {showOptions && <UserOptions userName={userName} onOptionSelect={handleOptionSelect} />}
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+        <GiftedChat
+          messages={messages}
+          renderInputToolbar={() => { }}
+          user={{ _id: 1 }} 
+          minInputToolbarHeight={0}
+          renderBubble={renderCustomBubble} 
+        />
+      </View>
+
+      <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+        <Text style={styles.infoText}>PsicoChat podría cometer errores, por favor validar información importante</Text>
+      </View>
+      <View style={{ flexDirection: 'row' }}>
+        <View style={{
+          flex: 1, marginLeft: 10, marginBottom: 5, backgroundColor: 'white', borderRadius: 15, borderColor: 'grey',
+          borderWidth: 1, height: 40, marginRight: 10, paddingLeft: 10, justifyContent: 'center'
+        }}>
+          <TextInput placeholder='Describe tus síntomas' onChangeText={handleTextInput} value={inputMessage} />
         </View>
 
-        <StatusBar style="auto" />
+        <TouchableOpacity onPress={handleButtonClick}>
+          <View style={{ borderRadius: 9999, backgroundColor: '#78b9bd', padding: 5, marginRight: 10, marginBottom: 20, width: 50, justifyContent: 'center', height: 40 }}>
+            <MaterialIcons name="send" size={24} color="white" style={{ marginLeft: 10 }} />
+          </View>
+        </TouchableOpacity>
       </View>
+
+      <StatusBar style="auto" />
+    </View>
   );
 }
 
@@ -150,9 +217,54 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: 'grey',
     marginBottom: 4,
+    fontWeight: 'bold',
     fontStyle: 'italic',
     marginLeft: 5,
     textAlign: 'center',
     justifyContent: 'center'
-  }
+  },
+  leftBubble: {
+    backgroundColor: '#A2D9CE',
+    borderRadius: 10,
+    padding: 1,
+  },
+  rightBubble: {
+    backgroundColor: '#CFF4D2',
+    borderRadius: 10,
+    padding: 1,
+  },
+  leftText: {
+    color: '#333333',
+    fontSize: 16,
+  },
+  rightText: {
+    color: '#4A4A4A',
+    fontSize: 16,
+  },
+  leftTime: {
+    color: 'grey',
+    fontSize: 12,
+  },
+  rightTime: {
+    color: 'grey',
+    fontSize: 12,
+  },
+  messageContainer: {
+    alignItems: 'flex-start', 
+    marginBottom: 5, 
+  },
+  botContainer: {
+    alignItems: 'center', 
+  },
+  botAvatar: {
+    width: 30, 
+    height: 30, 
+    marginBottom: 5, 
+  },
+  botText: {
+    backgroundColor: '#CFF4D2', 
+    borderRadius: 10,
+    padding: 5,
+    maxWidth: '80%', 
+  },
 });

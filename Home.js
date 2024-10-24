@@ -26,7 +26,7 @@ const Home = ({ navigation }) => {
                 <View style={styles.card}>
                     <Text style={styles.cardTitle}>Guía de Autoayuda</Text>
                     <Text style={styles.cardDescription}>
-                        Recibe herramientas de autoayuda y consejos prácticos para gestioanr el estrés, la ansiedad y la depresión, verificados por profesionales de la salud.
+                        Recibe herramientas de autoayuda y consejos prácticos para gestionar el estrés, la ansiedad y la depresión, verificados por profesionales de la salud.
                     </Text>
                 </View>
                 <View style={styles.card}>

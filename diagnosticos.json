@@ -1,0 +1,109 @@
+[
+    {
+      "diagnosticos": "depresión",
+      "palabras-clave": ["tristeza", "desánimo", "fatiga"],
+      "recomendaciones": [
+        "Considera hablar con un profesional de la salud mental.",
+        "Intenta realizar actividades que disfrutes.",
+        "Mantén un horario regular de sueño."
+      ]
+    },
+    {
+      "diagnosticos": "ansiedad",
+      "palabras-clave": ["preocupación", "nervios", "inquietud"],
+      "recomendaciones": [
+        "Practica técnicas de respiración.",
+        "Considera la meditación o el yoga.",
+        "Habla sobre tus preocupaciones con alguien de confianza."
+      ]
+    },
+    {
+        "nombre": "Estrés postraumático",
+        "palabrasClave": ["trauma", "flashbacks", "pesadillas", "hipervigilancia", "evitación", "recuerdos angustiantes", "ansiedad severa"],
+        "recomendaciones": [
+          "Terapia de exposición.",
+          "Terapia cognitivo-conductual.",
+          "Apoyo emocional.",
+          "Terapia EMDR.",
+          "Actividades que promuevan la calma y relajación."
+        ]
+      },
+      {
+        "nombre": "Trastorno Bipolar",
+        "palabrasClave": ["cambios de humor", "euforia", "energía excesiva", "irritabilidad", "depresión profunda", "impulsividad"],
+        "recomendaciones": [
+          "Consultas regulares con un psiquiatra.",
+          "Terapia de estabilización del estado de ánimo.",
+          "Psicoeducación sobre el trastorno bipolar.",
+          "Terapia familiar para apoyo continuo.",
+          "Medicamentos estabilizadores del ánimo."
+        ]
+      },
+      {
+        "nombre": "Trastorno Obsesivo Compulsivo (TOC)",
+        "palabrasClave": ["obsesiones", "compulsiones", "pensamientos intrusivos", "repetición de acciones", "rituales"],
+        "recomendaciones": [
+          "Terapia cognitivo-conductual (TCC).",
+          "Terapia de exposición y prevención de respuesta (ERP).",
+          "Ejercicios de relajación.",
+          "Apoyo en el manejo de las compulsiones.",
+          "Medicamentos específicos bajo supervisión médica."
+        ]
+      },
+      {
+        "nombre": "Fobia Social",
+        "palabrasClave": ["miedo a situaciones sociales", "ansiedad en público", "evitación de interacciones", "nerviosismo extremo", "temor al juicio"],
+        "recomendaciones": [
+          "Terapia de exposición gradual.",
+          "Terapia cognitivo-conductual.",
+          "Técnicas de relajación y respiración.",
+          "Practicar habilidades sociales.",
+          "Apoyo emocional en situaciones sociales."
+        ]
+      },
+      {
+        "nombre": "Trastorno de Estrés Agudo",
+        "palabrasClave": ["estrés intenso", "reacciones emocionales fuertes", "dificultad para concentrarse", "irritabilidad", "ansiedad aguda", "dificultad para dormir"],
+        "recomendaciones": [
+          "Terapia de crisis.",
+          "Apoyo emocional inmediato.",
+          "Técnicas de relajación y respiración.",
+          "Establecimiento de una rutina de sueño.",
+          "Ejercicio físico moderado."
+        ]
+      },
+      {
+        "nombre": "Trastorno de Pánico",
+        "palabrasClave": ["ataques de pánico", "palpitaciones", "sensación de ahogo", "mareos", "miedo a perder el control", "temor a morir"],
+        "recomendaciones": [
+          "Terapia cognitivo-conductual.",
+          "Ejercicios de respiración controlada.",
+          "Mindfulness y meditación.",
+          "Medicamentos bajo supervisión médica.",
+          "Establecer un plan de emergencia para los ataques."
+        ]
+      },
+      {
+        "nombre": "Trastorno del Sueño",
+        "palabrasClave": ["insomnio", "dificultad para dormir", "despertares frecuentes", "somnolencia diurna", "fatiga"],
+        "recomendaciones": [
+          "Higiene del sueño (rutinas regulares).",
+          "Evitar el uso de pantallas antes de dormir.",
+          "Terapia cognitivo-conductual para el insomnio.",
+          "Relajación antes de dormir (baños calientes, lectura).",
+          "Terapia de luz para regular el ciclo de sueño."
+        ]
+      },
+      {
+        "nombre": "Trastorno de Alimentación",
+        "palabrasClave": ["preocupación por el peso", "restricción alimentaria", "atracones", "autoimagen distorsionada", "vomitar después de comer"],
+        "recomendaciones": [
+          "Terapia especializada en trastornos alimentarios.",
+          "Apoyo nutricional profesional.",
+          "Psicoterapia individual.",
+          "Grupos de apoyo.",
+          "Evitar dietas extremas y practicar una alimentación saludable."
+        ]
+      }
+  ]
+  
