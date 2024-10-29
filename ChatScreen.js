@@ -48,7 +48,7 @@ export default function ChatScreen({ userName }) {
     setMessages(previousMessages => GiftedChat.append(previousMessages, [typingMessage]));
 
     
-    fetch('https://02b0-181-78-0-62.ngrok-free.app/predict', {  
+    fetch('https://47d9-181-78-0-62.ngrok-free.app/predict', {  
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,8 +64,11 @@ export default function ChatScreen({ userName }) {
       return response.json();
     })
     .then(data => {
-      const userPrediction = data.prediccion; 
+      const userPrediction = data.responses; 
+
       console.log('Predicción:', userPrediction);
+      
+      
       const formattedMessages = [...messages, userMessage].map(msg => ({
         role: msg.user._id === 1 ? "user" : "assistant",
         content: msg.text,
@@ -74,16 +77,12 @@ export default function ChatScreen({ userName }) {
       const allMessages = [
         {
           role: "system",
-          content: `Siempre dices tu nombre, Psicochat. Eres un asistente médico virtual experto en salud mental
-          .Siempre inicia la conversacion de una forma cordial con el usuario.
-          Intenta hablar de manera amigable con el usuario.
-          El nombre del usuario es ${userName}. 
-          Utiliza esta prediccion para responder de manera mas precisa ${userPrediction}.`
+          content: `Tu nombre es PsicoChat, eres un asistente virtual que ayuda a las personas en el ámbito de Salud Mental. Tratas de manera amigable al usuario en cada interacción. Solo hablas de temas de Salud Mental. El nombre del usuario es ${userName}. Utiliza esta información que está basada en experiencias previas reales para mejorar tus respuestas. ${userPrediction}`,
         },
         ...formattedMessages,
         {
-          role: "user",
-          content: `${messageText}`
+          role:"assistant",
+          content: `Recuerda que te llamas PsicoChat. Recuerda que debes tener en cuenta estas recomendaciones para responder al usuario ${userPrediction}`
         }
       ];
 
@@ -248,23 +247,6 @@ const styles = StyleSheet.create({
   rightTime: {
     color: 'grey',
     fontSize: 12,
-  },
-  messageContainer: {
-    alignItems: 'flex-start', 
-    marginBottom: 5, 
-  },
-  botContainer: {
-    alignItems: 'center', 
-  },
-  botAvatar: {
-    width: 30, 
-    height: 30, 
-    marginBottom: 5, 
-  },
-  botText: {
-    backgroundColor: '#CFF4D2', 
-    borderRadius: 10,
-    padding: 5,
-    maxWidth: '80%', 
-  },
+  }
+  
 });
