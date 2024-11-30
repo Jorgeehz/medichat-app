@@ -18,7 +18,7 @@ export default function WelcomeScreen({ onNameSubmit, navigation }) {
           onChangeText={setUserName}
         />
         <TouchableOpacity style={styles.button} onPress={() => {onNameSubmit(userName); navigation.navigate('Chat');}}>
-          <Text style={styles.buttonText}>Enviar</Text>
+          <Text style={styles.buttonText}>Continuar</Text>
         </TouchableOpacity>
     </View>
   );
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 24,
+    fontFamily: 'sans-serif',
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,

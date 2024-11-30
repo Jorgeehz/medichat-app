@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
-        backgroundColor: '#f4f4f4',
+        backgroundColor: 'white',
     },
     logoContainer: {
         width: 150,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     },
     card: {
         width: '44%',
-        backgroundColor: 'white',
+        backgroundColor: '#b4e3d8',
         borderRadius: 10,
         padding: 15,
         margin: 10,
@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
     cardDescription: {
         fontSize: 14,
         fontStyle: 'italic',
+        fontFamily: 'sans-serif',
         fontWeight: 'medium',
         textAlign: 'center',
     },

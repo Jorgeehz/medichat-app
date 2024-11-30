@@ -48,7 +48,7 @@ export default function ChatScreen({ userName }) {
     setMessages(previousMessages => GiftedChat.append(previousMessages, [typingMessage]));
 
     
-    fetch('https://47d9-181-78-0-62.ngrok-free.app/predict', {  
+    fetch('https://7997-181-78-0-62.ngrok-free.app/predict', {  
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -213,7 +213,7 @@ export default function ChatScreen({ userName }) {
 
 const styles = StyleSheet.create({
   infoText: {
-    fontSize: 12,
+    fontSize: 11,
     color: 'grey',
     marginBottom: 4,
     fontWeight: 'bold',
